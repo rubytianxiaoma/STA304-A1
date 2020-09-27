@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.75.1" />
+
+
+<title>COVID-19 Impacts More on Women and Develops More Seriously on the Old - A Hugo website</title>
+<meta property="og:title" content="COVID-19 Impacts More on Women and Develops More Seriously on the Old - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">7 min read</span>
+    
+
+    <h1 class="article-title">COVID-19 Impacts More on Women and Develops More Seriously on the Old</h1>
+
+    
+    <span class="article-date">2020-09-27</span>
+    
+
+    <div class="article-content">
+      
+
+
+<pre><code></code></pre>
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>With the COVID-19 cases investigation data released by the Toronto Public
+Health, it turns out that over half of the confirmed and probable cases in Toronto
+are composed by female patients, and patients over 50-year-old have a higher ICU
+admission rate.
+<span class="citation">Wickham et al. (2019)</span></p>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In order to analyze the impact of COVID-19 on our society, the Toronto Public Health has been collecting COVID-19 cases data in Toronto since the first confirmed COVID-19 case in January, 2020. We want to know which group is been affected the most as COVID-19 continues to threaten more lives. In a total of 17872 cases, 52.7% of them are composed by female patients, and 45.8% of them are male patients. From the data, we observed that COVID-19 has an bigger impact on Toronto female residents than male residents. Additionally, the impact of COVID-19 to an individual also differs across different age groups. If the level of impact is defined by whether the patient has been to ICU, we can observe that patients over 50 years old are more likely to develop serious illness, and patients with the age group of 70 to 79 years old have the highest ICU admission rate. In conclusion, COVID-19 has the most impact on females and develops serious among people over 50 years old.</p>
+</div>
+<div id="about-the-data" class="section level1">
+<h1>About the Data</h1>
+<p>The dataset I used is downloaded through the Toronto Open Data Portal which contains
+all the confirmed and probable COVID-19 cases managed by the Toronto Public Health. The latest update by the time of this project is on 23, September, 2020.
+The dataset is been refreshed and overwritten every Wednesday. It forms as a table which contains 18 variables related to demographic, geographic, and severity information. Each row represents an
+independent patient with all the associated information.
+The database contains 17872 rows in total until Sep 23, 2020.
+CITATION: Toronto Public Health, Sept 23, 2020. ‘COVID-19 CASES IN TORONTO’ <a href="https://open.toronto.ca/dataset/covid-19-cases-in-toronto/" class="uri">https://open.toronto.ca/dataset/covid-19-cases-in-toronto/</a></p>
+<p>Client Gender is the self-reported gender and generally based on people’s assigned biological sex.</p>
+<p>Age Group is the patient’s age at the time of illness , in years. This variable contains 10 elements which are 19 and younger, 20 to 29 Years, 30 to 39 Years, 40 to 49 Years, 50 to 59 Years, 60 to 69 Years, 70 to 79 Years, 80 to 89 Years, 90 and older, and unknown(blank).</p>
+<p>Ever in ICU indicates whether if cases were admitted to the intensive care unit (ICU)
+related to their COVID-19 infection, it includes cases are currently in ICU and those been discharged or deceased.</p>
+</div>
+<div id="about-my-clean-vision-data" class="section level1">
+<h1>About my clean vision data</h1>
+<pre class="r"><code>clean_data &lt;- COVID_cases_original %&gt;%
+  select(`Age Group`, `Client Gender`,`Ever in ICU`)
+head(clean_data)
+## # A tibble: 6 x 3
+##   `Age Group`    `Client Gender` `Ever in ICU`
+##   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;        
+## 1 50 to 59 Years FEMALE          No           
+## 2 50 to 59 Years MALE            No           
+## 3 20 to 29 Years FEMALE          No           
+## 4 60 to 69 Years FEMALE          No           
+## 5 60 to 69 Years MALE            No           
+## 6 50 to 59 Years MALE            No
+# I create a table only containing four variables I want to analyze, which are 
+# Age Group, Client Gender, and Ever in ICU.</code></pre>
+<p>I selected 3 variables to create a new table from the original dataset and
+named the new table clean_data. Since I want to investigate the demographic and
+severity information, clean_data contains three variables that are
+Client Gender, Age Group and Ever in ICU.</p>
+</div>
+<div id="visualize-gender-variable-in-a-bar-plot" class="section level1">
+<h1>Visualize gender variable in a bar plot</h1>
+<pre class="r"><code>gender_proportion &lt;- clean_data %&gt;%
+  ggplot(aes(x = `Client Gender`))+
+  geom_bar() +
+  labs(caption =&#39;Toronto Public Health, Sept 23, 2020. COVID-19 CASES IN TORONTO&#39;)+ 
+  theme_light()
+gender_proportion</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="st-summary-statistics-based-on-client-gender" class="section level1">
+<h1>1st Summary Statistics based on Client Gender</h1>
+<p>Based on the statistics, We observed that the number of female patients is the largest, which is 9427 out of 17872 patients, while there are only 5 transgender patients.</p>
+<pre class="r"><code>Gender_sum &lt;- clean_data %&gt;%
+  group_by(`Client Gender`) %&gt;% 
+    count()
+Gender_sum
+## # A tibble: 5 x 2
+## # Groups:   Client Gender [5]
+##   `Client Gender`     n
+##   &lt;chr&gt;           &lt;int&gt;
+## 1 FEMALE           9427
+## 2 MALE             8184
+## 3 OTHER               6
+## 4 TRANSGENDER         5
+## 5 UNKNOWN           250
+# Count number of each element in Client gender.</code></pre>
+<div id="discuission-why-female" class="section level2">
+<h2>Discuission – Why female?</h2>
+<p>From the data collected from 17872 Toronto COVID patients, we can observe that females are being affected the most by COVID-19. There’s an observable difference between the number of male and female patients which is composed by 45.8% and 52.7% of the total cases population. One potential reason for higher infection rate is
+that females tend to have a higher participation rate working in service industries(Kwolek-Folland, A., &amp; Walsh, M. 2007), such as restaurents and healthcare facilities etc.
+Citation: Kwolek-Folland, A., &amp; Walsh, M. (2007). Women in the Service Industries: National Perspectives. The Business History Review, 81(3), 421-427. Retrieved September 27, 2020, from <a href="http://www.jstor.org/stable/25097375" class="uri">http://www.jstor.org/stable/25097375</a></p>
+</div>
+</div>
+<div id="nd-graph-scatterplot-between-age-group-and-icu-proportion-rate-in-each-group" class="section level1">
+<h1>2nd Graph – Scatterplot between age group and ICU proportion rate in each group</h1>
+<pre class="r"><code>new &lt;- clean_data %&gt;%
+  group_by(`Age Group`) %&gt;%
+  filter(`Age Group` != &#39;NaN&#39;) %&gt;%
+  summarise(proportion = mean(`Ever in ICU` == &#39;Yes&#39;),.groups = &#39;drop&#39;)
+new
+## # A tibble: 9 x 2
+##   `Age Group`    proportion
+##   &lt;chr&gt;               &lt;dbl&gt;
+## 1 19 and younger    0.00458
+## 2 20 to 29 Years    0.00426
+## 3 30 to 39 Years    0.00477
+## 4 40 to 49 Years    0.0174 
+## 5 50 to 59 Years    0.0368 
+## 6 60 to 69 Years    0.0629 
+## 7 70 to 79 Years    0.0794 
+## 8 80 to 89 Years    0.0283 
+## 9 90 and older      0.00538
+# ICU rate in different age groups without unknown age group.
+
+age_and_icu_scatter &lt;- new %&gt;%
+   ggplot(aes(x=`Age Group`, y=proportion)) + geom_point(shape=24, color=&quot;red&quot;)+
+  labs(x= &#39;Age Group&#39;, y = &#39;ICU proportion&#39;,caption = &#39;Toronto Public Health, Sept 23, 2020. COVID-19 CASES IN TORONTO&#39;)+
+  coord_flip() +
+  ggtitle(&quot;Scatterplot of age group and each group&#39;s ICU proportion&quot;)
+age_and_icu_scatter</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="nd-graph-discuission-based-on-age-group-and-its-icu-proportion" class="section level1">
+<h1>2nd Graph discuission based on age group and its icu proportion</h1>
+<p>Without the influence of blink data in age group, I expect to see ICU proportion
+and age group have a positive relationship, that is, ICU proportion rate
+will increase as age increases.The scatterplot describes that people
+with age group 70-79 years has the highest ICU proportion which is around 0.0794,
+and people with age group 20-29 years has the lowest ICU proportion which is
+around 0.0043. However,people over 79 years old have a low
+ICU proportion especially for the group 90 and older, with only 0.005%.</p>
+</div>
+<div id="discuission-why-covid-hurt-70-79-years-old-so-much-weakness-and-potential-missing-data." class="section level1">
+<h1>Discuission – Why COVID hurt 70-79 years old so much? Weakness and potential missing data.</h1>
+<p>According to Professor Hassan Vally, he noticed human’s immune system weakens
+as we age. In the graph above I only analyzed if the patient has ever been sent to ICU
+without the consideration of death rate. We observed the ICU proportion starts
+to increase for those over 50 years old, then there’s a significant decrease
+for people over 79 years of age. However, the death rate begins to increase for
+people over 50 years old and reaches the peak at over 90 years old age group.
+The cruel reality is that many elderly people living alone have passed away without
+being noticed at home, they can be accounted to missing data.
+Another thing causing the misleading ICU proportion is for those old people
+who are sent to hospital can’t take their last breath before transfering to ICU
+due to their weak immune system.</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+<a href="https://doi.org/10.21105/joss.01686" class="uri">https://doi.org/10.21105/joss.01686</a></p>
+<p>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins
+and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2020). rmarkdown: Dynamic
+Documents for R. R package version 2.3. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</p>
+<p>Yihui Xie (2020). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package
+version 1.30.</p>
+<p>Toronto Public Health, Sept 23, 2020. ‘COVID-19 CASES IN TORONTO’
+<a href="https://open.toronto.ca/dataset/covid-19-cases-in-toronto/" class="uri">https://open.toronto.ca/dataset/covid-19-cases-in-toronto/</a></p>
+<p>Kwolek-Folland, A., &amp; Walsh, M. (2007). Women in the Service Industries:
+National Perspectives. The Business History Review, 81(3), 421-427.
+Retrieved September 27, 2020, from <a href="http://www.jstor.org/stable/25097375" class="uri">http://www.jstor.org/stable/25097375</a></p>
+<div id="refs" class="references">
+<div id="ref-citetidyverse">
+<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.</p>
+</div>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

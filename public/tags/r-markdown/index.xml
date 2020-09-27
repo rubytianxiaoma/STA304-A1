@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Markdown on A Hugo website</title>
+    <link>/tags/r-markdown/</link>
+    <description>Recent content in R Markdown on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 27 Sep 2020 21:13:14 -0500</lastBuildDate><atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>COVID-19 Impacts More on Women and Develops More Seriously on the Old</title>
+      <link>/2020/09/27/covid-19-impacts-more-on-women-and-develops-more-seriously-on-the-old/</link>
+      <pubDate>Sun, 27 Sep 2020 21:13:14 -0500</pubDate>
+      
+      <guid>/2020/09/27/covid-19-impacts-more-on-women-and-develops-more-seriously-on-the-old/</guid>
+      <description>Abstract With the COVID-19 cases investigation data released by the Toronto Public Health, it turns out that over half of the confirmed and probable cases in Toronto are composed by female patients, and patients over 50-year-old have a higher ICU admission rate. Wickham et al. (2019)
+ Introduction In order to analyze the impact of COVID-19 on our society, the Toronto Public Health has been collecting COVID-19 cases data in Toronto since the first confirmed COVID-19 case in January, 2020.</description>
+    </item>
+    
+  </channel>
+</rss>
