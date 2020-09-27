@@ -37,12 +37,13 @@ CITATION: Toronto Public Health, Sept 23, 2020. ‘COVID-19 CASES IN TORONTO’ 
 <p>Ever in ICU indicates whether if cases were admitted to the intensive care unit (ICU)
 related to their COVID-19 infection, it includes cases are currently in ICU and those been discharged or deceased.</p>
 </div>
+<div id="about-my-code" class="section level1">
+<h1>About my code</h1>
+<p>Supporting code and data available at ‘<a href="https://github.com/rubytianxiaoma/STA304-A1" class="uri">https://github.com/rubytianxiaoma/STA304-A1</a>’. Please go to ‘Content’ &gt; ‘post’ &gt; ‘2015-07-23-r-rmarkdown.Rmd’ with comment ‘Last updated A1’</p>
+</div>
 <div id="about-my-clean-vision-data" class="section level1">
 <h1>About my clean vision data</h1>
-<pre class="r"><code>clean_data &lt;- COVID_cases_original %&gt;%
-  select(`Age Group`, `Client Gender`,`Ever in ICU`)
-head(clean_data)
-## # A tibble: 6 x 3
+<pre><code>## # A tibble: 6 x 3
 ##   `Age Group`    `Client Gender` `Ever in ICU`
 ##   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;        
 ## 1 50 to 59 Years FEMALE          No           
@@ -50,9 +51,7 @@ head(clean_data)
 ## 3 20 to 29 Years FEMALE          No           
 ## 4 60 to 69 Years FEMALE          No           
 ## 5 60 to 69 Years MALE            No           
-## 6 50 to 59 Years MALE            No
-# I create a table only containing four variables I want to analyze, which are 
-# Age Group, Client Gender, and Ever in ICU.</code></pre>
+## 6 50 to 59 Years MALE            No</code></pre>
 <p>I selected 3 variables to create a new table from the original dataset and
 named the new table clean_data. Since I want to investigate the demographic and
 severity information, clean_data contains three variables that are
@@ -60,22 +59,12 @@ Client Gender, Age Group and Ever in ICU.</p>
 </div>
 <div id="visualize-gender-variable-in-a-bar-plot" class="section level1">
 <h1>Visualize gender variable in a bar plot</h1>
-<pre class="r"><code>gender_proportion &lt;- clean_data %&gt;%
-  ggplot(aes(x = `Client Gender`))+
-  geom_bar() +
-  labs(caption =&#39;Toronto Public Health, Sept 23, 2020. COVID-19 CASES IN TORONTO&#39;)+ 
-  theme_light()
-gender_proportion</code></pre>
-<p><img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="st-summary-statistics-based-on-client-gender" class="section level1">
 <h1>1st Summary Statistics based on Client Gender</h1>
 <p>Based on the statistics, We observed that the number of female patients is the largest, which is 9427 out of 17872 patients, while there are only 5 transgender patients.</p>
-<pre class="r"><code>Gender_sum &lt;- clean_data %&gt;%
-  group_by(`Client Gender`) %&gt;% 
-    count()
-Gender_sum
-## # A tibble: 5 x 2
+<pre><code>## # A tibble: 5 x 2
 ## # Groups:   Client Gender [5]
 ##   `Client Gender`     n
 ##   &lt;chr&gt;           &lt;int&gt;
@@ -83,8 +72,7 @@ Gender_sum
 ## 2 MALE             8184
 ## 3 OTHER               6
 ## 4 TRANSGENDER         5
-## 5 UNKNOWN           250
-# Count number of each element in Client gender.</code></pre>
+## 5 UNKNOWN           250</code></pre>
 <div id="discuission-why-female" class="section level2">
 <h2>Discuission – Why female?</h2>
 <p>From the data collected from 17872 Toronto COVID patients, we can observe that females are being affected the most by COVID-19. There’s an observable difference between the number of male and female patients which is composed by 45.8% and 52.7% of the total cases population. One potential reason for higher infection rate is
@@ -94,12 +82,7 @@ Citation: Kwolek-Folland, A., &amp; Walsh, M. (2007). Women in the Service Indus
 </div>
 <div id="nd-graph-scatterplot-between-age-group-and-icu-proportion-rate-in-each-group" class="section level1">
 <h1>2nd Graph – Scatterplot between age group and ICU proportion rate in each group</h1>
-<pre class="r"><code>new &lt;- clean_data %&gt;%
-  group_by(`Age Group`) %&gt;%
-  filter(`Age Group` != &#39;NaN&#39;) %&gt;%
-  summarise(proportion = mean(`Ever in ICU` == &#39;Yes&#39;),.groups = &#39;drop&#39;)
-new
-## # A tibble: 9 x 2
+<pre><code>## # A tibble: 9 x 2
 ##   `Age Group`    proportion
 ##   &lt;chr&gt;               &lt;dbl&gt;
 ## 1 19 and younger    0.00458
@@ -110,16 +93,8 @@ new
 ## 6 60 to 69 Years    0.0629 
 ## 7 70 to 79 Years    0.0794 
 ## 8 80 to 89 Years    0.0283 
-## 9 90 and older      0.00538
-# ICU rate in different age groups without unknown age group.
-
-age_and_icu_scatter &lt;- new %&gt;%
-   ggplot(aes(x=`Age Group`, y=proportion)) + geom_point(shape=24, color=&quot;red&quot;)+
-  labs(x= &#39;Age Group&#39;, y = &#39;ICU proportion&#39;,caption = &#39;Toronto Public Health, Sept 23, 2020. COVID-19 CASES IN TORONTO&#39;)+
-  coord_flip() +
-  ggtitle(&quot;Scatterplot of age group and each group&#39;s ICU proportion&quot;)
-age_and_icu_scatter</code></pre>
-<p><img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+## 9 90 and older      0.00538</code></pre>
+<p><img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="nd-graph-discuission-based-on-age-group-and-its-icu-proportion" class="section level1">
 <h1>2nd Graph discuission based on age group and its icu proportion</h1>

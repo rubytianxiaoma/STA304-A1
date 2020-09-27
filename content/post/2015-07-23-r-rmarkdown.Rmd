@@ -56,8 +56,11 @@ independent patient with all the associated information.
   Ever in ICU indicates whether if cases were admitted to the intensive care unit (ICU) 
 related to their COVID-19 infection, it includes cases are currently in ICU and those been discharged or deceased. 
 
+# About my code 
+  Supporting code and data available at 'https://github.com/rubytianxiaoma/STA304-A1'. Please go to 'Content' > 'post' > '2015-07-23-r-rmarkdown.Rmd' with comment 'Last updated A1'
+  
 # About my clean vision data  
-```{r data-prepare}
+```{r,echo=FALSE}
 clean_data <- COVID_cases_original %>%
   select(`Age Group`, `Client Gender`,`Ever in ICU`)
 head(clean_data)
@@ -70,7 +73,7 @@ severity information, clean_data contains three variables that are
 Client Gender, Age Group and Ever in ICU. 
 
 # Visualize gender variable in a bar plot
-```{r}
+```{r,echo=FALSE}
 gender_proportion <- clean_data %>%
   ggplot(aes(x = `Client Gender`))+
   geom_bar() +
@@ -81,7 +84,7 @@ gender_proportion
 
 # 1st Summary Statistics based on Client Gender
   Based on the statistics, We observed that the number of female patients is the largest, which is 9427 out of 17872 patients, while there are only 5 transgender patients. 
-```{r}
+```{r,echo=FALSE}
 Gender_sum <- clean_data %>%
   group_by(`Client Gender`) %>% 
     count()
@@ -95,7 +98,7 @@ that females tend to have a higher participation rate working in service industr
   Citation: Kwolek-Folland, A., & Walsh, M. (2007). Women in the Service Industries: National Perspectives. The Business History Review, 81(3), 421-427. Retrieved September 27, 2020, from http://www.jstor.org/stable/25097375
 
 # 2nd Graph -- Scatterplot between age group and ICU proportion rate in each group
-```{r}
+```{r,echo=FALSE}
 new <- clean_data %>%
   group_by(`Age Group`) %>%
   filter(`Age Group` != 'NaN') %>%
