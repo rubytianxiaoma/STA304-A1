@@ -26,6 +26,9 @@ COVID_cases_original <- get_resource("e5bf35bc-e681-43da-b2ce-0242d00922ad")
 ```
 ```
 ```
+Author: Tianxiao Ma
+Date:2020-09-27
+
 # Abstract
 
   With the COVID-19 cases investigation data released by the Toronto Public
